@@ -1,6 +1,6 @@
 
 # BananaBot
-The official Github repository for BananaBot, the most epical bot in all the land!
+BananaBot, the most epical bot in all the land!
 ---
 ### What's this repo doing here???
 This repository will be full of BananaBot when we rewrite Bananabot (soon!)
