@@ -23,7 +23,7 @@ class Banana(Bot):
         #Setting up the parent class
         super().__init__(
           activity=config.activity,
-          command_prefix=commands.when_mentioned_or(prefix),
+          command_prefix=prefix,
           help_command=HelpCommand(),
           token=config.token
           )
