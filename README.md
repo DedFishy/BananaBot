@@ -2,15 +2,17 @@
 # BananaBot
 ## BananaBot, the most epical bot in all the land!
 
-### What's this repo doing here???
-This repository will be full of BananaBot when we rewrite Bananabot (soon!)
-
 ### What's BananaBot?
 BananaBot is a Discord bot full of fun commands! We have gifs, image editing, and more cool stuff!
 [Bananabot Website](https://bananabot.epizy.com "The BananaBot Webste")
 ### Running BananaBot
-Instructions will magically appear here when BananaBot is rewritten and released.
-### A rough list of requirements
+So here's what ya gotta do:
+- Download BananaBot
+- Install the requirements
+- Fill `config.py` with actual stuff
+- Cross your fingers
+- Run `main.py`
+### A list of requirements
 This is a (possibly inacurate) list of BananaBot's requirements:
 - Python 3.7.7 or later ([2](#2))
 - `discord` 1.0.1 ([1](#1))
