@@ -32,3 +32,5 @@ This is a (possibly inacurate) list of BananaBot's requirements:
 <li><p id="4">Not on PyPI and needs to be added separately. Should be bundled with BananaBot.
 </ol>
 <br>This may not be a complete list of requirements. If you get any errors about missing packages, install them, and maybe create an issue or a discussion about it!
+
+Please note that the `sugurl` in `config.py` is actually deprecated and can be left blank.
