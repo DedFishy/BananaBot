@@ -3,11 +3,10 @@
 #This is a map of cog names to "rich" cog names
 #You should change the emojis because they're from the BananaBot Support server
 cogmapping = {
-    "basic": "<:basic:785983789947813908> Basic",
-    "fun": "<:fun:785983790254129202> Fun",
-    "helpful": "<:helpful:785983789851607111> Helpful",
-    "images": "<:images:785983790588624896> Images",
-    "locked": "<:locked:785983790493073418> Locked",
+    "basic": ":speech_balloon: Basic",
+    "fun": ":grin: Fun",
+    "helpful": ":grey_question: Helpful",
+    "images": ":frame_photo: Images",
 }
 
 #Imports
@@ -16,7 +15,7 @@ import discord
 from discord.ext.commands import HelpCommand
 from discord.utils import oauth_url
 import config
-from funcs import msg
+from funcs import msg, error
 
 class HelpCommand(HelpCommand):
     #A function to generate the links and help command instructions
@@ -46,7 +45,6 @@ class HelpCommand(HelpCommand):
             final += f"""[Support server]({supportserver} "The {name} support server")\n"""
         #The end of the string
         final += f"""
-
                 Commands: {len(self.context.bot.commands)}
                 Here are all the categories:"""
 

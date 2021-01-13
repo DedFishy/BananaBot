@@ -5,7 +5,7 @@ from urllib.request import urlopen, urlretrieve
 from urllib.parse import quote
 import json
 from datetime import datetime
-from funcs import msg, error, blurify, clayify, makebsod, getacat
+from funcs import msg, error, blurify, clayify, makebsod, getacat, loading
 from funcs import makeclyde, stencilify, makediscord, getdoge, getaquackyboi, fuzzyimage, getgif, getapic, tshirter, rainbowimage, tvimage, makeqr, readqr
 
 #Initializing the bot variable
@@ -30,9 +30,9 @@ class Images(commands.Cog, name="images"):
         if not text:
             await ctx.send(embed=error(title="COuld not read QR, get closer", desc="You need to put in some text to generate the QR from!"))
             return
-        loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+        load = await loading(ctx)
         img = await ctx.bot.loop.run_in_executor(None, makeqr, text)
-        await loading.delete()
+        await load.delete()
         await ctx.send(embed=msg(title="Cool QR", desc="We make QRs using [QRServer.com](http://qrserver.com/)!"), file=img)
         
     @qr.command("read", brief="Read a QR code")
@@ -44,11 +44,11 @@ class Images(commands.Cog, name="images"):
             await ctx.send(embed=error(title="No, no, NO!", desc="You neeeeed to upload a QR code along with your message, you dumb moron! (Just kidding.)"))
             print(e)
             return
-        loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+        load = await loading(ctx)
         text = await ctx.bot.loop.run_in_executor(None, readqr, qr)
         text = text['symbol'][0]["data"]
         await ctx.send(embed=msg(title="Cool QR", desc="We read QRs using [QRServer.com](http://qrserver.com/)!\nIt says:\n" + text))
-        await loading.delete()
+        await load.delete()
     
     #The group for image editors
     @commands.group()
@@ -65,9 +65,9 @@ class Images(commands.Cog, name="images"):
             await ctx.send(embed=error(title="I found my glasses", desc="You gotta upload an image to blur"))
             print(e)
             return
-        loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+        load = await loading(ctx)
         im = await ctx.bot.loop.run_in_executor(None, blurify, image)
-        await loading.delete()
+        await load.delete()
         await ctx.send(file=im)
         
     @edit.command("clay", brief="Clayify an image")
@@ -79,9 +79,9 @@ class Images(commands.Cog, name="images"):
             await ctx.send(embed=error(title="There's no clay left", desc="You gotta upload an image to... clayify?"))
             print(e)
             return
-        loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+        load = await loading(ctx)
         im = await ctx.bot.loop.run_in_executor(None, clayify, image)
-        await loading.delete()
+        await load.delete()
         await ctx.send(file=im)
     
     @edit.command("outline", brief="Outline an image")
@@ -93,10 +93,10 @@ class Images(commands.Cog, name="images"):
             await ctx.send(embed=error(title="Stenciled", desc="You gotta upload an image to ~~blur~~ outline"))
             print(e)
             return
-        loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+        load = await loading(ctx)
         im = await ctx.bot.loop.run_in_executor(None, stencilify, image)
         await ctx.send(file=im)
-        await loading.delete()
+        await load.delete()
     
     @commands.command("gif", brief="Search for a gif")
     async def findgif(self, ctx, *, query=""):
@@ -106,7 +106,7 @@ class Images(commands.Cog, name="images"):
             await ctx.send(embed=error(title="Then Thomas fell into a mine", desc="You didn't put in a search for a gif!"))
             return
         else:
-            loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+            load = await loading(ctx)
             query = quote(arg)
             data= await ctx.bot.loop.run_in_executor(None, getgif, arg)
             data = dict(data)
@@ -115,7 +115,7 @@ class Images(commands.Cog, name="images"):
             except Exception as e:
                 await ctx.send(embed=error(title="Giphy says NNNNNOOOPPEEE", desc="There were no results for your hopefully epic gif search."))
                 print(str(e))
-            await loading.delete()
+            await load.delete()
     
     @commands.command("pic", brief="Search for a picture")
     async def findpic(self, ctx, *, query=""):
@@ -188,15 +188,15 @@ class Images(commands.Cog, name="images"):
         if arg=="":
             await ctx.send(embed=error(title="Account terminated", desc="You need to put in text for Discord to say!"))
         else:
-            loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+            load = await loading(ctx)
             try:
                 file = await ctx.bot.loop.run_in_executor(None, makediscord, arg)
                 await ctx.send(file=file)
-                await loading.delete()
+                await load.delete()
             except Exception as e:
                 print(str(e))
                 await ctx.send(embed=error(title="Suspiscion arises", desc="For some reason we couldn't make Discord say that. Try again?"))
-                await loading.delete()
+                await load.delete()
     
     @generate.command("bsod", brief="Make a fake BSOD")
     async def fakebsodohno(self, ctx, *, bsod=""):
@@ -205,15 +205,15 @@ class Images(commands.Cog, name="images"):
         if arg=="":
             await ctx.send(embed=error(title="Account terminated", desc="You need to put in text to make an error!"))
         else:
-            loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+            load = await loading(ctx)
             try:
                 file = await ctx.bot.loop.run_in_executor(None, makebsod, bsod)
                 await ctx.send(file=file)
-                await loading.delete()
+                await load.delete()
             except Exception as e:
                 print(str(e))
                 await ctx.send(embed=error(title="Suspiscion arises", desc="For some reason there was an error making the error. *Errorception*."))
-                await loading.delete()
+                await load.delete()
     
     @generate.command("tshirt", brief="Put text on a shirt")
     async def putonatshirt(self, ctx, *, text=""):
@@ -222,15 +222,15 @@ class Images(commands.Cog, name="images"):
         if arg=="":
             await ctx.send(embed=error(title="The shirt doesn't fit anymore", desc="You need to put in text so that it can be put on a *T*"))
         else:
-            loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+            load = await loading(ctx)
             try:
                 file = await ctx.bot.loop.run_in_executor(None, tshirter, text)
                 await ctx.send(file=file)
-                await loading.delete()
+                await load.delete()
             except Exception as e:
                 print(str(e))
                 await ctx.send(embed=error(title="Suspiscion arises", desc="For some reason we couldn't *put that on a t-shirt*. Maybe ***DO IT AGAIN***"))
-                await loading.delete()
+                await load.delete()
     
     @commands.command("doge", brief="Get a dog pic")
     async def doggie(self, ctx):
@@ -245,15 +245,15 @@ class Images(commands.Cog, name="images"):
         if arg=="":
             await ctx.send(embed=error(title="This user is not accepting DMs", desc="You need to put in text for Clyde to say!"))
         else:
-            loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+            load = await loading(ctx)
             try:
                 file = await ctx.bot.loop.run_in_executor(None, makeclyde, message)
                 await ctx.send(file=file)
-                await loading.delete()
+                await load.delete()
             except Exception as e:
                 print(str(e))
                 await ctx.send(embed=error(title="Suspiscion arises", desc="For some reason we couldn't make Clyde say that. Try again?"))
-                await loading.delete()
+                await load.delete()
 
     @commands.command("duck", brief="Get a duck pic!")
     async def duckie(self, ctx):

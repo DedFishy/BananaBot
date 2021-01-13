@@ -1,5 +1,5 @@
 from discord.ext import commands
-from funcs import msg, error, googlesearcherwordy
+from funcs import msg, error, googlesearcherwordy, loading
 from pyfiglet import Figlet as figlet
 from random import choice, shuffle, randint
 from urllib.parse import quote
@@ -48,11 +48,11 @@ class Fun(commands.Cog, name="fun"):
         """Get a random website, using the power of kindness and love"""
         keyword = choice(words)
         keyword = quote(keyword)
-        loading = await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
+        load = await loading(ctx)
         site = await ctx.bot.loop.run_in_executor(None, googlesearcherwordy, keyword)
         print(str(site))
         await ctx.send(embed=msg(titleurl=site, title="Click for a site!", desc="*Warning: Although we use SafeSearch,  __BananaBot is not responsible for the content of this site!__*"))
-        await loading.delete()
+        await load.delete()
     
     @commands.command("say", brief="Make the bot say something!")
     async def saysomethin(self, ctx, *, thing=""):

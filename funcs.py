@@ -111,14 +111,18 @@ def makeclyde(text):
     arr.seek(0)
     return discord.File(arr, filename="clydeisweird.png")
 
-def msg(title="", desc="", image="", titleurl="", thumbnail="", color=yellow):
+def msg(title="", desc="", footer="", image="", titleurl="", thumbnail="", color=yellow):
+    #Censor the title
     title = censor(title)
     desc = censor(desc)
+    #Doing all the other stuff
     embed = discord.Embed(title=title, description=desc, url=titleurl, color = color)
     if not image == "":
         embed.set_image(url=image)
     if not thumbnail == "":
         embed.set_thumbnail(url=thumbnail)
+    if not footer == "":
+        embed.set_footer(footer)
     return embed
 
 def error(title="", desc=""):
@@ -128,10 +132,8 @@ def error(title="", desc=""):
     embed.set_thumbnail(url="https://media4.giphy.com/media/NTddjTZTeOmXK/giphy.gif")
     return embed
 
-def loadingembed():
-    lembed = embed(color=yellow)
-    lembed.set_embed("https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif")
-    return lembed
+async def loading(ctx):
+    return await ctx.send(embed=msg(thumbnail="https://media4.giphy.com/media/dOmQEMUbT2fWKy7hCA/giphy.gif"))
 
 def getgif(query):
     return json.loads(urlopen("http://api.giphy.com/v1/gifs/search?q=" + query.replace(" ", "+") + "&api_key=" + config.giphy + "&limit=1&rating=g").read())
