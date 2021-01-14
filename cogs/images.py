@@ -4,6 +4,7 @@ from io import BytesIO
 from urllib.request import urlopen, urlretrieve
 from urllib.parse import quote
 import json
+import config
 from datetime import datetime
 from funcs import msg, error, blurify, clayify, makebsod, getacat, loading
 from funcs import makeclyde, stencilify, makediscord, getdoge, getaquackyboi, fuzzyimage, getgif, getapic, tshirter, rainbowimage, tvimage, makeqr, readqr
@@ -20,7 +21,7 @@ def setup(bbot):
 class Images(commands.Cog, name="images"):
     """Commands related to images, like image generation and stuff."""
     #QR subcommand
-    @commands.group()
+    @commands.group(brief="QR code commands")
     async def qr(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send(embed=msg(title="You put the pixel in the wrong place", desc="That's an invalid QR command!"))
@@ -51,10 +52,10 @@ class Images(commands.Cog, name="images"):
         await load.delete()
     
     #The group for image editors
-    @commands.group()
+    @commands.group(brief="Image editing commands")
     async def edit(self, ctx):
         if ctx.invoked_subcommand is None:
-            await ctx.send(embed=msg(title="You put the pixel in the wrong place (we reused this title haha)", desc="That's an invalid Qeditorommand!"))
+            await ctx.send(embed=msg(title="You put the pixel in the wrong place (we reused this title haha)", desc="That's an invalid editor command!"))
     
     @edit.command("blur", brief="Blur an image")
     async def blurryboi(self, ctx):
@@ -140,7 +141,7 @@ class Images(commands.Cog, name="images"):
         data = dict(data)
         await ctx.send(embed=msg(title="NASA Picture of The Day", desc="Powered by [NASA](https://nasa.gov)", titleurl=data["url"], image=data["url"]))
     
-    @commands.group()
+    @commands.group(brief="Image generation commands")
     async def generate(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send(embed=msg(title="WE put the pixel in the wrong place", desc="That's an invalid image generator command!"))

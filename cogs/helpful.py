@@ -61,8 +61,7 @@ class Helpful(commands.Cog, name="helpful"):
                 lyric = await ctx.bot.loop.run_in_executor(None, getlyrics, title, artist)
                 lyriclist = [(lyric[i:i+2000]) for i in range(0, len(lyric), 2000)]
                 for i in range(0, len(lyriclist)):
-                    await ctx.send(embed=msg(desc=lyriclist[i]))
-                    await ctx.send(embed=msg(title="\nPowered by [Genius](https://genius.com)"))
+                    await ctx.send(embed=msg(title="Song lyrics, powered by https://genius.com", desc=lyriclist[i]))
                 await load.delete()
             except Exception as e:
                 await ctx.send(embed=error(title="No musics for you", desc="Coundn't get the lyrics. Most likely we couldn't find the lyrics."))

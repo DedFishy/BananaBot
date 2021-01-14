@@ -3,7 +3,7 @@ from discord.ext import commands
 import discord
 from datetime import timedelta
 from discord.ext import commands
-from funcs import msg, error
+from funcs import msg, error, statmsg
 import requests
 import discord
 import textwrap
@@ -45,7 +45,7 @@ class Basic(commands.Cog, name="basic"):
 
         return content.strip('` \n')  # remove `foo`
     
-    @commands.group(checks=[devcheck])
+    @commands.group(checks=[devcheck], brief="Commands only the bot developers can use!")
     async def dev(self, ctx):
         if ctx.invoked_subcommand is None:
             await ctx.send(embed=msg(title="Traceback most recent call last", desc="That's an invalid developer command!"))
@@ -140,7 +140,7 @@ class Basic(commands.Cog, name="basic"):
     @commands.command("uptime", brief="Get the bot's uptime")
     async def uptime(self, ctx):
         """Get the bot's uptime (how long it's been online)"""
-        await ctx.send(embed=msg(desc="**Uptime is " + str(timedelta(seconds=int("%.0f" % int(time() - bot.starttime)))) + "**"))
+        await ctx.send(embed=msg(desc="Uptime is " + str(timedelta(seconds=int("%.0f" % int(time() - bot.starttime)))) + ""))
     
     @commands.command("stats", brief="Get various bot stats")
     async def botstats(self, ctx):
@@ -150,9 +150,9 @@ class Basic(commands.Cog, name="basic"):
     @commands.command("ping", brief="Get BananaBot's ping")
     async def ping(self, ctx):
         """Get BananaBot's ping (how many seconds it takes to do stuff"""
-        await ctx.send(embed=msg(desc="**Ping received! I'm not really a 'pong' type of guy. Latency is %.3f seconds.**"%bot.latency))
+        await ctx.send(embed=msg(desc="Ping received! I'm not really a 'pong' type of guy. Latency is %.3f seconds."%bot.latency))
 
     @commands.command("credits", brief="Show the credits")
     async def credits(self, ctx):
         """It's the end of the movie, show the credits (who made BananaBot)"""
-        await ctx.send(embed=msg(title="Credits", desc="**Created by the owner of [The Epical Programming Server](https://teps.ml)**"))
+        await ctx.send(embed=msg(title="Credits", desc="Created by the owner of [The Epical Programming Server](https://teps.ml)"))
