@@ -1,4 +1,4 @@
-#Imports
+#Imports (duh lol)
 from discord.ext import commands
 import discord
 from datetime import timedelta
