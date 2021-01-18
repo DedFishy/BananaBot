@@ -1,4 +1,4 @@
-#Imports (duh lol)
+#Imports
 from discord.ext import commands
 import discord
 from datetime import timedelta
@@ -103,18 +103,16 @@ class Basic(commands.Cog, name="basic"):
     async def reloadyboi(self, ctx, *, category=""):
         """Reloads a category"""
         try:
-            bot.reload_extension(category)
+            bot.reload_extension("cogs." + category)
+            await ctx.send(embed=msg(title="Yes", desc="~~THE MATRIX~~ COG RELOADED!"))
         except Exception as e:
             await ctx.send(embed=error(title="NOPED", desc="Yo, you need an actual category!"))
             print(e)  
     @dev.command("servercount", brief="Get a list of servers")
     async def servercount(self, ctx):
         """Get a list of servers the bot is on"""
-        if ctx.author.id == 645264167623983124:
-            servers = list(bot.guilds)
-            await ctx.send(embed=msg(title=f"Connected to {str(len(servers))} servers:", desc='\n'.join(server.name for server in servers)))
-        else:
-            await ctx.send(embed=error(title="The hacker has been caught", desc="For privacy reasons, this command is only available to the owner of the bot."))
+        servers = list(bot.guilds)
+        await ctx.send(embed=msg(title=f"Connected to {str(len(servers))} servers:", desc='\n'.join(server.name for server in servers)))
 
     @dev.command("pres", brief="Change the bot's presence")
     async def changezepres(self, ctx, text="", prestype=""):
@@ -123,20 +121,16 @@ class Basic(commands.Cog, name="basic"):
         arg2 = prestype
         if arg1 == "" or arg2 == "" or not arg2.isnumeric():
             await ctx.send(embed=error(title="That's no good, sir", desc="You need to put in a status and a status type (the type is a number)!"))
-        elif ctx.author.id == 645264167623983124:
+        else:
             await bot.change_presence(activity=discord.Activity(name=arg1, type=int(arg2)))
             await ctx.send(embed=msg(title="Yessir", desc="The presence has been set, sir"))
-        else:
-            await ctx.send(embed=error(title="No can do, sir", desc="Hey, you're not the captain! You're an *Imposter!* (You can't use this command lol)"))
-            
+
     @dev.command("stop", brief="Stop the bot")
     async def stopthebot(self, ctx):
         """Stop the bot"""
-        if ctx.author.id == 645264167623983124:
-            await ctx.send(embed=msg(title="Stopping..."))
-            quit()
-        else:
-            await ctx.send(embed=error(title="You can't stop me", desc="You don't own the bot, so you can't stop the bot. Fair's fair."))
+        await ctx.send(embed=msg(title="Stopping..."))
+        quit()
+
     @commands.command("uptime", brief="Get the bot's uptime")
     async def uptime(self, ctx):
         """Get the bot's uptime (how long it's been online)"""

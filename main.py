@@ -15,7 +15,6 @@ from os.path import exists
 from urllib.request import urlretrieve
 from time import sleep
 import requests
-from pymongo import MongoClient
 
 if gethostname() == config.devpc:
     devmode = True

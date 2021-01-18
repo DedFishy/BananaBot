@@ -3,6 +3,8 @@ from funcs import msg, error, googlesearcherwordy, loading
 from pyfiglet import Figlet as figlet
 from random import choice, shuffle, randint
 from urllib.parse import quote
+import json
+from urllib.request import urlopen
 
 bot = None
 
@@ -46,6 +48,19 @@ class Fun(commands.Cog, name="fun"):
     async def flip(self, ctx):
         """Flip a coin that doesn't exist"""
         await ctx.send(embed=msg(title="You flipped that coin and got " + choice(['heads', 'tails']) + ".", thumbnail="https://media.giphy.com/media/a8TIlyVS7JixO/giphy.gif"))
+    
+    @commands.command("skinsteal", brief="Steal a Minecraft Java player's skin!")
+    async def stealthatskin(self, ctx, *, username=""):
+        """Steal a Minecraft Java Edition player's skin!"""
+        if username == "":
+            await ctx.send(embed=error(title="Minceraft Java Edition", desc="You need to provide a username!"))
+        else:
+            try:
+                data=json.loads(urlopen(f"https://api.mojang.com/users/profiles/minecraft/{username}").read())
+                await ctx.send(embed=msg(title="Robber!", desc="You just stole " + username + "'s skin!"))
+                await ctx.send("https://crafatar.com/skins/" + data["id"])
+            except:
+                await ctx.send(embed=error(title="The skin was guarded carefully", desc="Whoops, make sure that username exists and that you're not spamming the command!"))
     
     @commands.command("jumble", brief="Jumble up some text")
     async def jumble(self, ctx, *, text=""):
