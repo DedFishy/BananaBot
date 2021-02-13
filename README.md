@@ -18,7 +18,6 @@ This is a (possibly inacurate) list of BananaBot's requirements:
 - `discord` 1.0.1 ([1](#1))
 - `requests` 2.24.0 ([1](#1))
 - `asyncio` latest ([3](#3))
-- `asqlite` [latest](https://github.com/Rapptz/asqlite "asqlite") ([4](#4))
 - `pillow` 8.0.1 ([1](#1))
 - `translate` 3.5.0 ([1](#1))
 - `lyricsgenius` 2.0.2 ([1](#1))
